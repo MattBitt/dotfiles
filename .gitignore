@@ -1,0 +1,11 @@
+# Fish shell variables (machine-specific)
+fish_variables
+
+# SSH private keys (never commit these!)
+id_*
+*.pem
+*.key
+
+# Known hosts (machine-specific)
+known_hosts
+known_hosts.old

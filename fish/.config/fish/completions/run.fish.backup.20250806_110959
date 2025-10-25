@@ -1,0 +1,233 @@
+# Fish completion for HMTC run command
+# Place this file in ~/.config/fish/completions/run.fish
+
+function __fish_run_needs_command
+    set cmd (commandline -opc)
+    if [ (count $cmd) -eq 1 -a $cmd[1] = 'run' ]
+        return 0
+    end
+    return 1
+end
+
+function __fish_run_using_command
+    set cmd (commandline -opc)
+    if [ (count $cmd) -gt 1 ]
+        if [ $argv[1] = $cmd[2] ]
+            return 0
+        end
+    end
+    return 1
+end
+
+# Main script completions
+complete -c run -f -n '__fish_run_needs_command' -a 'admin' -d 'Administration (users, config, version, health, logs)'
+complete -c run -f -n '__fish_run_needs_command' -a 'build' -d 'Build operations (frontend, backend, docker)'
+complete -c run -f -n '__fish_run_needs_command' -a 'deploy' -d 'Deployment operations (deploy, rollback, monitor)'
+complete -c run -f -n '__fish_run_needs_command' -a 'dev' -d 'Development utilities (webhook, realtime)'
+complete -c run -f -n '__fish_run_needs_command' -a 'env' -d 'Environment lifecycle (start, stop, status, logs)'
+complete -c run -f -n '__fish_run_needs_command' -a 'maintenance' -d 'Code maintenance (imports, cleanup, analysis)'
+complete -c run -f -n '__fish_run_needs_command' -a 'migration' -d 'Database migrations and operations'
+complete -c run -f -n '__fish_run_needs_command' -a 'postgres' -d 'PostgreSQL operations and health'
+complete -c run -f -n '__fish_run_needs_command' -a 'repo' -d 'Repository analysis and insights'
+complete -c run -f -n '__fish_run_needs_command' -a 'shell' -d 'Shell access (container, database, server)'
+complete -c run -f -n '__fish_run_needs_command' -a 'test' -d 'Testing framework (backend, frontend, coverage)'
+complete -c run -f -n '__fish_run_needs_command' -a 'webhook' -d 'Webhook testing and validation'
+complete -c run -f -n '__fish_run_needs_command' -a 'completions' -d 'Fish completions management (install, update, uninstall)'
+
+# Completions subcommands
+complete -c run -f -n '__fish_run_using_command completions' -a 'install' -d 'Install fish completions'
+complete -c run -f -n '__fish_run_using_command completions' -a 'uninstall' -d 'Uninstall fish completions'
+complete -c run -f -n '__fish_run_using_command completions' -a 'update' -d 'Update existing completions'
+complete -c run -f -n '__fish_run_using_command completions' -a 'check' -d 'Check if completions are installed'
+
+# Admin subcommands
+complete -c run -f -n '__fish_run_using_command admin' -a 'users' -d 'User management'
+complete -c run -f -n '__fish_run_using_command admin' -a 'config' -d 'Configuration management'
+complete -c run -f -n '__fish_run_using_command admin' -a 'version' -d 'Version management'
+complete -c run -f -n '__fish_run_using_command admin' -a 'health' -d 'Health checks'
+complete -c run -f -n '__fish_run_using_command admin' -a 'logs' -d 'Log management'
+
+# Admin users subcommands
+complete -c run -f -n '__fish_run_using_command admin; and __fish_seen_subcommand_from users' -a 'create' -d 'Create admin user'
+complete -c run -f -n '__fish_run_using_command admin; and __fish_seen_subcommand_from users' -a 'create-default' -d 'Create default admin user'
+complete -c run -f -n '__fish_run_using_command admin; and __fish_seen_subcommand_from users' -a 'list' -d 'List admin users'
+complete -c run -f -n '__fish_run_using_command admin; and __fish_seen_subcommand_from users' -a 'delete' -d 'Delete admin user'
+
+# Admin config subcommands
+complete -c run -f -n '__fish_run_using_command admin; and __fish_seen_subcommand_from config' -a 'validate' -d 'Validate configuration'
+complete -c run -f -n '__fish_run_using_command admin; and __fish_seen_subcommand_from config' -a 'generate' -d 'Generate configuration'
+complete -c run -f -n '__fish_run_using_command admin; and __fish_seen_subcommand_from config' -a 'backup' -d 'Backup configuration'
+complete -c run -f -n '__fish_run_using_command admin; and __fish_seen_subcommand_from config' -a 'restore' -d 'Restore configuration'
+complete -c run -f -n '__fish_run_using_command admin; and __fish_seen_subcommand_from config' -a 'secrets' -d 'Manage secrets'
+
+# Admin version subcommands
+complete -c run -f -n '__fish_run_using_command admin; and __fish_seen_subcommand_from version' -a 'status' -d 'Show version status'
+complete -c run -f -n '__fish_run_using_command admin; and __fish_seen_subcommand_from version' -a 'bump' -d 'Bump version'
+complete -c run -f -n '__fish_run_using_command admin; and __fish_seen_subcommand_from version' -a 'sync' -d 'Synchronize version'
+complete -c run -f -n '__fish_run_using_command admin; and __fish_seen_subcommand_from version' -a 'tags' -d 'Check git tags'
+complete -c run -f -n '__fish_run_using_command admin; and __fish_seen_subcommand_from version' -a 'history' -d 'Show version history'
+
+# Admin health subcommands
+complete -c run -f -n '__fish_run_using_command admin; and __fish_seen_subcommand_from health' -a 'system' -d 'System health check'
+complete -c run -f -n '__fish_run_using_command admin; and __fish_seen_subcommand_from health' -a 'database' -d 'Database health check'
+complete -c run -f -n '__fish_run_using_command admin; and __fish_seen_subcommand_from health' -a 'application' -d 'Application health check'
+complete -c run -f -n '__fish_run_using_command admin; and __fish_seen_subcommand_from health' -a 'all' -d 'All health checks'
+
+# Admin logs subcommands
+complete -c run -f -n '__fish_run_using_command admin; and __fish_seen_subcommand_from logs' -a 'show' -d 'Show logs'
+complete -c run -f -n '__fish_run_using_command admin; and __fish_seen_subcommand_from logs' -a 'search' -d 'Search logs'
+complete -c run -f -n '__fish_run_using_command admin; and __fish_seen_subcommand_from logs' -a 'errors' -d 'Show error logs'
+complete -c run -f -n '__fish_run_using_command admin; and __fish_seen_subcommand_from logs' -a 'export' -d 'Export logs'
+
+# Build subcommands
+complete -c run -f -n '__fish_run_using_command build' -a 'frontend' -d 'Build frontend'
+complete -c run -f -n '__fish_run_using_command build' -a 'backend' -d 'Build backend'
+complete -c run -f -n '__fish_run_using_command build' -a 'docker' -d 'Build Docker images'
+complete -c run -f -n '__fish_run_using_command build' -a 'clean' -d 'Clean build artifacts'
+complete -c run -f -n '__fish_run_using_command build' -a 'verify' -d 'Verify build'
+
+# Build backend subcommands (for Flask/FastAPI compatibility)
+complete -c run -f -n '__fish_run_using_command build; and __fish_seen_subcommand_from backend' -a 'flask' -d 'Build Flask backend'
+complete -c run -f -n '__fish_run_using_command build; and __fish_seen_subcommand_from backend' -a 'fastapi' -d 'Build FastAPI backend'
+complete -c run -f -n '__fish_run_using_command build; and __fish_seen_subcommand_from backend' -a 'all' -d 'Build both backends'
+
+# Deploy subcommands
+complete -c run -f -n '__fish_run_using_command deploy' -a 'deploy' -d 'Deploy application'
+complete -c run -f -n '__fish_run_using_command deploy' -a 'rollback' -d 'Rollback deployment'
+complete -c run -f -n '__fish_run_using_command deploy' -a 'status' -d 'Show deployment status'
+complete -c run -f -n '__fish_run_using_command deploy' -a 'monitor' -d 'Monitor deployment'
+complete -c run -f -n '__fish_run_using_command deploy' -a 'scale' -d 'Scale deployment'
+
+# Dev subcommands
+complete -c run -f -n '__fish_run_using_command dev' -a 'webhook' -d 'Webhook testing'
+complete -c run -f -n '__fish_run_using_command dev' -a 'realtime' -d 'Realtime development'
+complete -c run -f -n '__fish_run_using_command dev' -a 'backend' -d 'Backend development'
+
+# Dev backend subcommands
+complete -c run -f -n '__fish_run_using_command dev; and __fish_seen_subcommand_from backend' -a 'flask' -d 'Flask backend development'
+complete -c run -f -n '__fish_run_using_command dev; and __fish_seen_subcommand_from backend' -a 'fastapi' -d 'FastAPI backend development'
+complete -c run -f -n '__fish_run_using_command dev; and __fish_seen_subcommand_from backend' -a 'start' -d 'Start backend development server'
+complete -c run -f -n '__fish_run_using_command dev; and __fish_seen_subcommand_from backend' -a 'stop' -d 'Stop backend development server'
+complete -c run -f -n '__fish_run_using_command dev; and __fish_seen_subcommand_from backend' -a 'restart' -d 'Restart backend development server'
+
+# Env subcommands
+complete -c run -f -n '__fish_run_using_command env' -a 'start' -d 'Start environment'
+complete -c run -f -n '__fish_run_using_command env' -a 'stop' -d 'Stop environment'
+complete -c run -f -n '__fish_run_using_command env' -a 'status' -d 'Show environment status'
+complete -c run -f -n '__fish_run_using_command env' -a 'logs' -d 'Show environment logs'
+complete -c run -f -n '__fish_run_using_command env' -a 'setup' -d 'Setup environment'
+complete -c run -f -n '__fish_run_using_command env' -a 'reset' -d 'Reset environment'
+complete -c run -f -n '__fish_run_using_command env' -a 'clean' -d 'Clean environment'
+
+# Maintenance subcommands
+complete -c run -f -n '__fish_run_using_command maintenance' -a 'imports' -d 'Import management'
+complete -c run -f -n '__fish_run_using_command maintenance' -a 'cleanup' -d 'Cleanup operations'
+complete -c run -f -n '__fish_run_using_command maintenance' -a 'analyze' -d 'Code analysis'
+
+# Maintenance imports subcommands
+complete -c run -f -n '__fish_run_using_command maintenance; and __fish_seen_subcommand_from imports' -a 'check' -d 'Check import issues'
+complete -c run -f -n '__fish_run_using_command maintenance; and __fish_seen_subcommand_from imports' -a 'fix' -d 'Fix import issues'
+complete -c run -f -n '__fish_run_using_command maintenance; and __fish_seen_subcommand_from imports' -a 'update' -d 'Update import paths'
+
+# Maintenance cleanup subcommands
+complete -c run -f -n '__fish_run_using_command maintenance; and __fish_seen_subcommand_from cleanup' -a 'all' -d 'All cleanup operations'
+complete -c run -f -n '__fish_run_using_command maintenance; and __fish_seen_subcommand_from cleanup' -a 'containers' -d 'Container cleanup'
+complete -c run -f -n '__fish_run_using_command maintenance; and __fish_seen_subcommand_from cleanup' -a 'images' -d 'Image cleanup'
+complete -c run -f -n '__fish_run_using_command maintenance; and __fish_seen_subcommand_from cleanup' -a 'system' -d 'System cleanup'
+complete -c run -f -n '__fish_run_using_command maintenance; and __fish_seen_subcommand_from cleanup' -a 'logs' -d 'Log cleanup'
+complete -c run -f -n '__fish_run_using_command maintenance; and __fish_seen_subcommand_from cleanup' -a 'temp' -d 'Temp cleanup'
+complete -c run -f -n '__fish_run_using_command maintenance; and __fish_seen_subcommand_from cleanup' -a 'cache' -d 'Cache cleanup'
+
+# Migration subcommands
+complete -c run -f -n '__fish_run_using_command migration' -a 'upgrade' -d 'Upgrade database'
+complete -c run -f -n '__fish_run_using_command migration' -a 'downgrade' -d 'Downgrade database'
+complete -c run -f -n '__fish_run_using_command migration' -a 'status' -d 'Show migration status'
+complete -c run -f -n '__fish_run_using_command migration' -a 'seed' -d 'Seed database'
+
+# Postgres subcommands
+complete -c run -f -n '__fish_run_using_command postgres' -a 'health' -d 'Check PostgreSQL health'
+complete -c run -f -n '__fish_run_using_command postgres' -a 'optimize' -d 'Optimize PostgreSQL'
+complete -c run -f -n '__fish_run_using_command postgres' -a 'vacuum' -d 'Vacuum database'
+complete -c run -f -n '__fish_run_using_command postgres' -a 'analyze' -d 'Analyze database'
+
+# Repo subcommands
+complete -c run -f -n '__fish_run_using_command repo' -a 'analyze' -d 'Analyze repository'
+complete -c run -f -n '__fish_run_using_command repo' -a 'size' -d 'Repository size analysis'
+complete -c run -f -n '__fish_run_using_command repo' -a 'stats' -d 'Repository statistics'
+
+# Shell subcommands
+complete -c run -f -n '__fish_run_using_command shell' -a 'container' -d 'Container shell access'
+complete -c run -f -n '__fish_run_using_command shell' -a 'backend' -d 'Backend shell access'
+complete -c run -f -n '__fish_run_using_command shell' -a 'frontend' -d 'Frontend shell access'
+complete -c run -f -n '__fish_run_using_command shell' -a 'database' -d 'Database shell access'
+complete -c run -f -n '__fish_run_using_command shell' -a 'server' -d 'Server shell access'
+
+# Shell backend subcommands (for Flask/FastAPI compatibility)
+complete -c run -f -n '__fish_run_using_command shell; and __fish_seen_subcommand_from backend' -a 'flask' -d 'Flask backend shell'
+complete -c run -f -n '__fish_run_using_command shell; and __fish_seen_subcommand_from backend' -a 'fastapi' -d 'FastAPI backend shell'
+complete -c run -f -n '__fish_run_using_command shell; and __fish_seen_subcommand_from backend' -a 'flask-backend' -d 'Flask backend container'
+complete -c run -f -n '__fish_run_using_command shell; and __fish_seen_subcommand_from backend' -a 'fastapi-backend' -d 'FastAPI backend container'
+
+# Test subcommands
+complete -c run -f -n '__fish_run_using_command test' -a 'backend' -d 'Backend tests'
+complete -c run -f -n '__fish_run_using_command test' -a 'frontend' -d 'Frontend tests'
+complete -c run -f -n '__fish_run_using_command test' -a 'all' -d 'All tests'
+complete -c run -f -n '__fish_run_using_command test' -a 'coverage' -d 'Test coverage'
+complete -c run -f -n '__fish_run_using_command test' -a 'watch' -d 'Watch mode tests'
+
+# Test backend subcommands (for Flask/FastAPI compatibility)
+complete -c run -f -n '__fish_run_using_command test; and __fish_seen_subcommand_from backend' -a 'flask' -d 'Flask backend tests'
+complete -c run -f -n '__fish_run_using_command test; and __fish_seen_subcommand_from backend' -a 'fastapi' -d 'FastAPI backend tests'
+complete -c run -f -n '__fish_run_using_command test; and __fish_seen_subcommand_from backend' -a 'all' -d 'All backend tests'
+complete -c run -f -n '__fish_run_using_command test; and __fish_seen_subcommand_from backend' -a 'unit' -d 'Unit tests'
+complete -c run -f -n '__fish_run_using_command test; and __fish_seen_subcommand_from backend' -a 'integration' -d 'Integration tests'
+
+# Webhook subcommands
+complete -c run -f -n '__fish_run_using_command webhook' -a 'test' -d 'Test webhook'
+complete -c run -f -n '__fish_run_using_command webhook' -a 'signature' -d 'Verify signature'
+complete -c run -f -n '__fish_run_using_command webhook' -a 'secret' -d 'Manage secrets'
+
+# Environment completions
+complete -c run -f -n '__fish_run_using_command' -a 'dev' -d 'Development environment'
+complete -c run -f -n '__fish_run_using_command' -a 'development' -d 'Development environment'
+complete -c run -f -n '__fish_run_using_command' -a 'staging' -d 'Staging environment'
+complete -c run -f -n '__fish_run_using_command' -a 'prod' -d 'Production environment'
+complete -c run -f -n '__fish_run_using_command' -a 'production' -d 'Production environment'
+
+# Common options
+complete -c run -f -n '__fish_run_using_command' -l remote -d 'Use remote execution'
+complete -c run -f -n '__fish_run_using_command' -l non-interactive -d 'Skip confirmation prompts'
+complete -c run -f -n '__fish_run_using_command' -l force -d 'Force operation (skip checks)'
+complete -c run -f -n '__fish_run_using_command' -l verbose -d 'Verbose output'
+complete -c run -f -n '__fish_run_using_command' -l dry-run -d 'Show what would be done without making changes'
+complete -c run -f -n '__fish_run_using_command' -l help -d 'Show help message'
+complete -c run -f -n '__fish_run_using_command' -s h -d 'Show help message'
+
+# Service completions for logs
+complete -c run -f -n '__fish_run_using_command admin; and __fish_seen_subcommand_from logs' -a 'backend' -d 'Backend service'
+complete -c run -f -n '__fish_run_using_command admin; and __fish_seen_subcommand_from logs' -a 'frontend' -d 'Frontend service'
+complete -c run -f -n '__fish_run_using_command admin; and __fish_seen_subcommand_from logs' -a 'postgres' -d 'PostgreSQL service'
+complete -c run -f -n '__fish_run_using_command admin; and __fish_seen_subcommand_from logs' -a 'nginx' -d 'Nginx service'
+complete -c run -f -n '__fish_run_using_command admin; and __fish_seen_subcommand_from logs' -a 'redis' -d 'Redis service'
+complete -c run -f -n '__fish_run_using_command admin; and __fish_seen_subcommand_from logs' -a 'flask-backend' -d 'Flask backend service'
+complete -c run -f -n '__fish_run_using_command admin; and __fish_seen_subcommand_from logs' -a 'fastapi-backend' -d 'FastAPI backend service'
+
+# Version type completions
+complete -c run -f -n '__fish_run_using_command admin; and __fish_seen_subcommand_from version; and __fish_seen_subcommand_from bump' -a 'patch' -d 'Patch version bump'
+complete -c run -f -n '__fish_run_using_command admin; and __fish_seen_subcommand_from version; and __fish_seen_subcommand_from bump' -a 'minor' -d 'Minor version bump'
+complete -c run -f -n '__fish_run_using_command admin; and __fish_seen_subcommand_from version; and __fish_seen_subcommand_from bump' -a 'major' -d 'Major version bump'
+
+# Backend-specific completions for container operations
+complete -c run -f -n '__fish_run_using_command shell; and __fish_seen_subcommand_from container' -a 'flask-backend' -d 'Flask backend container'
+complete -c run -f -n '__fish_run_using_command shell; and __fish_seen_subcommand_from container' -a 'fastapi-backend' -d 'FastAPI backend container'
+complete -c run -f -n '__fish_run_using_command shell; and __fish_seen_subcommand_from container' -a 'frontend' -d 'Frontend container'
+complete -c run -f -n '__fish_run_using_command shell; and __fish_seen_subcommand_from container' -a 'nginx' -d 'Nginx container'
+complete -c run -f -n '__fish_run_using_command shell; and __fish_seen_subcommand_from container' -a 'postgres' -d 'PostgreSQL container'
+complete -c run -f -n '__fish_run_using_command shell; and __fish_seen_subcommand_from container' -a 'redis' -d 'Redis container'
+
+# Backend-specific completions for health checks
+complete -c run -f -n '__fish_run_using_command admin; and __fish_seen_subcommand_from health' -a 'flask-backend' -d 'Flask backend health check'
+complete -c run -f -n '__fish_run_using_command admin; and __fish_seen_subcommand_from health' -a 'fastapi-backend' -d 'FastAPI backend health check'
+complete -c run -f -n '__fish_run_using_command admin; and __fish_seen_subcommand_from health' -a 'frontend' -d 'Frontend health check'
+complete -c run -f -n '__fish_run_using_command admin; and __fish_seen_subcommand_from health' -a 'database' -d 'Database health check'
+complete -c run -f -n '__fish_run_using_command admin; and __fish_seen_subcommand_from health' -a 'all' -d 'All services health check' 
