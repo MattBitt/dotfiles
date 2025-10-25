@@ -115,7 +115,3 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-
-. "$HOME/.local/bin/env"
-run() { [ -f "./run" ] && ./run "$@" || echo "Error: run script not found. Make sure you are in the HMTC project root directory."; }
-source ~/programming/hmtc/run-bash
