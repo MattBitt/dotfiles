@@ -6,7 +6,7 @@ Personal dotfiles managed with GNU Stow.
 
 1. Clone this repo:
    ```bash
-   git clone git@github.com:YOUR_USERNAME/dotfiles.git ~/dotfiles
+   git clone git@github.com:MattBitt/dotfiles.git ~/dotfiles
    cd ~/dotfiles
    ```
 
@@ -23,6 +23,7 @@ Personal dotfiles managed with GNU Stow.
    ```bash
    stow bash    # Bash configs
    stow fish    # Fish shell configs
+   stow git     # Git configs (user, email, global ignore)
    stow ssh     # SSH config
    ```
 
@@ -37,6 +38,7 @@ Each directory is a "stow package" that mirrors your home directory:
 
 - `bash/` - Bash shell configs (.bashrc, .profile, etc.)
 - `fish/` - Fish shell configs
+- `git/` - Git configs (.gitconfig, global ignore)
 - `ssh/` - SSH config (not keys!)
 
 ## Notes
