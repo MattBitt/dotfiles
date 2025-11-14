@@ -1,4 +1,2 @@
-# export PATH="$HOME/.local/bin:$PATH"
-export PATH="$HOME/bin:$PATH"
-alias run="./run"
-alias claude="/home/matt/.claude/local/claude"
+export PATH="$HOME/.local/bin:$PATH"
+fnm env --use-on-cd | source
