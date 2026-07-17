@@ -8,6 +8,20 @@ case $- in
       *) return;;
 esac
 
+# --- docker group activation (kratos / OpenSSH 10) ---
+# SSH logins here come up with ONLY the primary group — supplementary groups
+# (docker, sudo, ...) are dropped by the login path, so /var/run/docker.sock is
+# unreachable. If we *are* a docker member in the group DB but it isn't active,
+# re-exec this shell under the docker group so every pane can talk to docker.
+# Runs once per shell tree (_DGRP guard). Safe on hosts without docker: skips
+# unless `sg` exists and we're really a member, so it never kills a shell.
+if [ -z "$_DGRP" ] && command -v sg >/dev/null 2>&1 \
+   && ! id -nG | grep -qw docker \
+   && id -nG "$(id -un)" 2>/dev/null | grep -qw docker; then
+    export _DGRP=1
+    exec sg docker -c "exec $SHELL"
+fi
+
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
