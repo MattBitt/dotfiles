@@ -47,10 +47,15 @@ Most directories are "stow packages" that mirror your home directory:
 - `ssh/` - SSH config (not keys!)
 - `terminator/` - Terminator terminal config
 - `tmux/` - tmux config
+- `systemd/` - systemd **user** units (kratos: headless KRDP server)
 
 **Not stowed:**
 
 - `kde/` - Plasma 6 configs. Copied, not symlinked — see `kde/README.md`.
+
+After stowing `systemd/`, run `systemctl --user daemon-reload`. The KRDP unit
+also needs `~/.local/share/krdpserver/` (TLS cert + a 0600 `credentials` file);
+neither is in this repo. See the header comment in `krdp-headless.service`.
 
 ## Not everything can be stowed
 

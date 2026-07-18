@@ -1,0 +1,42 @@
+[Unit]
+# Headless KRDP server for kratos.
+#
+# Deliberately separate from the packaged app-org.kde.krdpserver.service, which
+# reads its config from the Plasma settings module (kcm_krdpserver) and expects
+# the password in KWallet. That path needs a monitor to set up. This unit takes
+# everything from flags instead, so it can be configured entirely over SSH.
+#
+# Credentials come from ~/.local/share/krdpserver/credentials (NOT in this repo):
+#   KRDP_USER=rdp
+#   KRDP_PASS=your-password-here
+# chmod 600 that file.
+#
+Description=KRDP headless RDP server (virtual monitor)
+After=plasma-kwin_wayland.service
+PartOf=graphical-session.target
+
+[Service]
+Type=simple
+EnvironmentFile=%h/.local/share/krdpserver/credentials
+
+Environment=QT_QPA_PLATFORM=wayland
+Environment=WAYLAND_DISPLAY=wayland-0
+
+# --plasma uses Plasma's own capture protocols rather than the XDG desktop
+# portal, which avoids an interactive "allow screen sharing?" prompt that
+# nobody can click on a headless box.
+# --virtual-monitor creates an output that does not need physical hardware.
+ExecStart=/usr/bin/krdpserver \
+    --username ${KRDP_USER} \
+    --password ${KRDP_PASS} \
+    --virtual-monitor 1920x1080@1 \
+    --plasma \
+    --quality 80 \
+    --certificate %h/.local/share/krdpserver/krdp.crt \
+    --certificate-key %h/.local/share/krdpserver/krdp.key
+
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=graphical-session.target

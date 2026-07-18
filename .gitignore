@@ -9,3 +9,7 @@ id_*
 # Known hosts (machine-specific)
 known_hosts
 known_hosts.old
+
+# KRDP credentials and TLS keys live in ~/.local/share/krdpserver/
+# and are never committed
+credentials
