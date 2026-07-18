@@ -32,14 +32,41 @@ Personal dotfiles managed with GNU Stow.
    stow -D bash
    ```
 
+5. Deploy the non-stow packages (see below):
+   ```bash
+   kde/sync.sh push
+   ```
+
 ## Structure
 
-Each directory is a "stow package" that mirrors your home directory:
+Most directories are "stow packages" that mirror your home directory:
 
 - `bash/` - Bash shell configs (.bashrc, .profile, etc.)
 - `fish/` - Fish shell configs
 - `git/` - Git configs (.gitconfig, global ignore)
 - `ssh/` - SSH config (not keys!)
+- `terminator/` - Terminator terminal config
+- `tmux/` - tmux config
+
+**Not stowed:**
+
+- `kde/` - Plasma 6 configs. Copied, not symlinked — see `kde/README.md`.
+
+## Not everything can be stowed
+
+Apps that save config by writing a temp file and renaming it over the target
+(KDE's KConfig, and others) **destroy the symlink** and leave a real file in its
+place. The package then silently stops tracking, with no error and no visible
+sign — `kde/` drifted ~148 lines out of date this way before it was caught.
+
+If a package covers an app whose GUI writes its own config, prefer the copy
+pattern in `kde/sync.sh` over stow. To spot a package that has already broken:
+
+```bash
+find ~/.config -maxdepth 2 -name '<file>' -not -type l
+```
+
+Anything that turns up as a real file but should be a symlink is dead.
 
 ## Notes
 
