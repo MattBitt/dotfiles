@@ -19,7 +19,7 @@ if [ -z "$_DGRP" ] && command -v sg >/dev/null 2>&1 \
    && ! id -nG | grep -qw docker \
    && id -nG "$(id -un)" 2>/dev/null | grep -qw docker; then
     export _DGRP=1
-    exec sg docker -c "exec $SHELL"
+    exec sg docker -c "exec bash"   # re-exec bash, NOT $SHELL (login shell is fish)
 fi
 
 # don't put duplicate lines or lines starting with space in the history.
