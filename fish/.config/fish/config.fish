@@ -17,6 +17,22 @@ fnm env --use-on-cd | source
 # --- Auto-attach to tmux for interactive terminals ---
 # Guards: only interactive shells (skips Claude/script shells), never nest
 # inside an existing tmux, and stay out of the way over SSH.
+#
+# `new-session -A` attaches to `main`, or creates it if it's gone — one command
+# instead of attach-then-fall-back, so a real attach error can't be swallowed
+# into a surprise second session.
+#
+# `and exec true` is what closes the terminal window. Detaching makes the tmux
+# client exit 0, so the `and` fires and fish replaces itself with `true`, which
+# exits immediately — Konsole has nothing left to host and closes.
+#
+# Two things this is deliberately NOT:
+#   - plain `and exit`: a bare `exit` in config.fish is ignored while fish is
+#     still sourcing config, so the window would stay open. Verified on 4.2.1.
+#   - `exec tmux ...`: also closes the window, but if tmux ever fails to start
+#     (bad tmux.conf, dead server) it takes the shell with it and the terminal
+#     just flashes and vanishes. Running tmux as a child and gating the exec on
+#     its exit status keeps a prompt around to debug from.
 if status is-interactive; and not set -q TMUX; and not set -q SSH_CONNECTION
-    tmux attach -t main 2>/dev/null; or tmux new -s main
+    tmux new-session -A -s main; and exec true
 end
